@@ -1,10 +1,10 @@
 # Spec mínima: de la reforma a la nómina
 
-**Fecha:** 2026-11-04 · **Estado:** borrador, con supuestos pendientes de aprobación
+**Fecha:** 2026-11-04 · **Estado:** v2, con los supuestos S1 a S7 aprobados
 **Origen:** rebanada A de [rebanadas-candidatas.md](rebanadas-candidatas.md); requisitos de [PRD.md](PRD.md); moat de [PVB.md](PVB.md), sección 3
 **Hitos:** despliegue el 9 de noviembre; panel y video el 16; Demo Day el 18
 
-Los elementos marcados con **(supuesto)** no están decididos todavía. Se listan en [docs/spec-review.md](spec-review.md).
+Los supuestos S1 a S7 de [spec-review.md](spec-review.md) quedaron aprobados y ya no se marcan en el texto. Los supuestos nuevos, pendientes de aprobación, están en [spec-review-v2.md](spec-review-v2.md).
 
 ## 1. Problema
 
@@ -16,7 +16,9 @@ El experto legal interno, que decide si una reforma entra al motor de reglas. En
 
 ## 3. El flujo, paso a paso
 
-**Caso del demo:** reproducción del paso del salario básico unificado (SBU) de $470 a $482 mediante el Acuerdo MDT-2025-195. No es una detección en vivo, y se dice así.
+**Estado inicial del sistema:** parámetro SBU 2025 ($470) vigente desde el 1 de enero de 2025, fuente por verificar. Ni el demo ni la interfaz afirman que un acuerdo de 2025 fija ese valor.
+
+**Caso del demo:** reproducción del ingreso del Acuerdo MDT-2025-195, el acuerdo documentado, que fija el SBU de 2026 en $482. Es la norma que el sistema ingresa en este flujo. No es una detección en vivo, y se dice así.
 
 1. El experto abre «Nueva norma» y registra el identificador, la fecha y el texto.
 2. El sistema genera una propuesta: parámetro, valor, vigencia y cita. Si el LLM falla, el experto la completa en un formulario.
@@ -25,6 +27,15 @@ El experto legal interno, que decide si una reforma entra al motor de reglas. En
 5. El experto aprueba, solo si todo está en verde, o rechaza con un motivo.
 6. Al aprobar, el sistema publica la versión nueva y crea un aviso por cada empresa afectada.
 7. El panel muestra la evidencia del recorrido.
+
+### Modal de versión
+
+Desde la escena de Juan, cada valor abre un modal con los datos de la versión que lo produjo: parámetro, valor, vigencia, fuente y estado.
+
+| Versión | Valor | Vigente desde | Fuente | Estado |
+| --- | --- | --- | --- | --- |
+| 2025 | $470 | 2025-01-01 | «Fuente por verificar», sin cita | Estado inicial del sistema |
+| 2026 | $482 | 2026-01-01 | Acuerdo MDT-2025-195, con su cita textual | Aprobada por `experto_demo`, con fecha de aprobación |
 
 ### Reglas de negocio
 
@@ -35,13 +46,13 @@ El experto legal interno, que decide si una reforma entra al motor de reglas. En
 | BR-03 | Solo se admiten cambios del parámetro `SBU`; cualquier otro parámetro se rechaza |
 | BR-04 | Cada período usa la versión vigente en su primer día, no la de la fecha del cálculo |
 | BR-05 | Los períodos cerrados guardan valor y versión, y nunca se recalculan |
-| BR-06 | Décimo cuarto mensualizado = SBU ÷ 12, redondeado a 2 decimales, mitad hacia arriba **(supuesto)**. Se calcula sobre mes completo y para empleados que optaron por la mensualización |
+| BR-06 | Décimo cuarto mensualizado = SBU ÷ 12, redondeado a 2 decimales, mitad hacia arriba. Se calcula sobre mes completo y para empleados que optaron por la mensualización |
 | BR-07 | Una propuesta solo se decide una vez; una segunda decisión se rechaza |
 | BR-08 | La salida del LLM se valida contra el esquema y no se acepta si su cita no aparece textualmente en la norma |
 
 ### Casos de regresión precargados
 
-Juan y Ana son empleados ficticios de dos empresas ficticias, con sueldo de $600 **(supuesto)** para que el piso salarial no intervenga.
+Juan y Ana son empleados ficticios de dos empresas ficticias, con sueldo de $600 para que el piso salarial no intervenga.
 
 | Caso | Empleado y período | Esperado |
 | --- | --- | --- |
@@ -62,7 +73,7 @@ Estos son los resultados esperados con cada propuesta:
 
 - [ ] **Recorrido completo.** Al aprobar la propuesta de $482 desde 2026-01-01, Juan queda en $40.17 en enero de 2026, con versión 2026 y cita del Acuerdo MDT-2025-195; su período cerrado de diciembre de 2025 sigue en $39.17 con versión 2025, y existen 2 avisos. El panel muestra las cinco métricas de la sección 6 con esos datos y las dos etiquetas de transparencia.
 - [ ] **Bloqueo.** Con la propuesta de $428, la interfaz desactiva «Aprobar», `POST /api/propuestas/:id/aprobar` responde 409 y la versión vigente no cambia. Lo mismo ocurre si se intenta aprobar sin corrida o decidir dos veces.
-- [ ] **El demo no depende del LLM.** Si el LLM da error, excede 8 segundos **(supuesto)** o devuelve una salida que no cumple BR-03 o BR-08, se abre el formulario manual sin perder el texto, y la propuesta manual recorre las mismas reglas con origen «manual».
+- [ ] **El demo no depende del LLM.** Si el LLM da error, excede 8 segundos o devuelve una salida que no cumple BR-03 o BR-08, se abre el formulario manual sin perder el texto, y la propuesta manual recorre las mismas reglas con origen «manual».
 
 ## 5. Qué queda fuera
 
@@ -81,10 +92,11 @@ Estos son los resultados esperados con cada propuesta:
 | Tema | Decisión |
 | --- | --- |
 | Aplicación | Next.js 14 (App Router) y TypeScript |
-| Base de datos | Prisma con Postgres en Supabase, también en desarrollo **(supuesto)** |
-| Despliegue | Vercel, con acceso protegido por contraseña; método por confirmar |
+| Base de datos | Prisma con Postgres en Supabase, también en desarrollo |
+| Despliegue | Vercel, sin plan Pro |
+| Acceso | HTTP Basic Auth en el middleware de Next.js. La contraseña se lee de la variable de entorno `DEMO_PASSWORD`. No se usa Vercel Password Protection |
 | LLM | Un solo endpoint con prompt cerrado y salida JSON. **Pregunta abierta:** ¿Claude Haiku o GPT-4o-mini? |
-| Pruebas | Vitest, con `npm test` **(supuesto)**. No se declaró TDD |
+| Pruebas | Vitest, con `npm test`. No se declaró TDD |
 
 **Datos:** `Norma`, `Propuesta`, `VersionMotor`, `CasoRegresion`, `CorridaRegresion`, `Empresa`, `Empleado`, `Periodo`, `LineaNomina` (valor y versión guardados), `Aviso` y `Evento` (alimenta el panel). `npm run db:seed` restablece el estado inicial del demo.
 
@@ -113,6 +125,6 @@ Estos son los resultados esperados con cada propuesta:
 **Etiquetas visibles en el panel y el demo:**
 
 - «Datos de demostración, no de uso».
-- «Casos de regresión validados contra fuente pública; certificación por firma de auditoría pendiente, no incluida en esta rebanada» **(supuesto: ajusta el texto acordado, que la ubicaba en la fase 2, porque el PRD la pone en la fase 1)**.
+- «Casos de regresión validados contra fuente pública; certificación por firma de auditoría pendiente, no incluida en esta rebanada». Ajusta el texto acordado, que la ubicaba en la fase 2, porque el PRD la pone en la fase 1.
 
 **Entrega del 9 de noviembre:** flujo completo con el formulario manual, sin LLM ni panel.

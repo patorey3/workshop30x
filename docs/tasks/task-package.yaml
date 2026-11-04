@@ -1,0 +1,42 @@
+planningWave: rebanada-a-olas-1-y-3
+tasksDir: docs/tasks
+milestones:
+  - "M1: Ola 1 - Flujo manual desplegado"
+  - "M2: Ola 3 - Eventos y panel"
+tasks:
+  - id: T01
+    file: docs/tasks/T01-crear-proyecto.md
+  - id: T02
+    file: docs/tasks/T02-persistencia-supabase.md
+  - id: T03
+    file: docs/tasks/T03-modelo-de-datos.md
+  - id: T04
+    file: docs/tasks/T04-datos-iniciales.md
+  - id: T05
+    file: docs/tasks/T05-motor-determinista.md
+  - id: T06
+    file: docs/tasks/T06-parametros-versionados.md
+  - id: T07
+    file: docs/tasks/T07-api-norma-y-propuesta.md
+  - id: T08
+    file: docs/tasks/T08-formulario-propuesta-manual.md
+  - id: T09
+    file: docs/tasks/T09-suite-de-regresion.md
+  - id: T10
+    file: docs/tasks/T10-bloqueo-periodo-cerrado.md
+  - id: T11
+    file: docs/tasks/T11-api-aprobar-y-rechazar.md
+  - id: T12
+    file: docs/tasks/T12-bandeja-de-aprobacion.md
+  - id: T13
+    file: docs/tasks/T13-escena-juan-y-modal.md
+  - id: T14
+    file: docs/tasks/T14-http-basic-auth.md
+  - id: T15
+    file: docs/tasks/T15-despliegue-vercel.md
+  - id: T16
+    file: docs/tasks/T16-eventos.md
+  - id: T17
+    file: docs/tasks/T17-api-panel.md
+  - id: T18
+    file: docs/tasks/T18-dashboard-y-etiquetas.md
