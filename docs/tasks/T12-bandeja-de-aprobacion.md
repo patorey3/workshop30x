@@ -38,7 +38,7 @@ Crea las pantallas donde el experto revisa propuestas, ejecuta la regresión y d
 
 ## Acceptance Criteria
 
-- [ ] La propuesta de $482 muestra 8 casos en verde y «Aprobar» activo.
+- [ ] La propuesta de $482 muestra 4 casos en verde y «Aprobar» activo.
 - [ ] La propuesta de $428 muestra sus casos en rojo con $35.67 y «Aprobar» desactivado.
 - [ ] Sin corrida, «Aprobar» está desactivado.
 - [ ] Tras decidir, la pantalla muestra la decisión y ya no ofrece botones.
@@ -53,7 +53,7 @@ Crea las pantallas donde el experto revisa propuestas, ejecuta la regresión y d
 ## Context
 
 - `docs/spec-rebanada-a.md`, sección 3, pasos 3 y 5, y criterio 2.
-- `docs/spec-review-v2.md`, S15.
+- `docs/spec-review-v2.md`, S8.
 
 ## Definition of Ready
 
@@ -63,4 +63,4 @@ Crea las pantallas donde el experto revisa propuestas, ejecuta la regresión y d
 
 ## Notes
 
-Si S8 vuelve a 4 casos, el primer criterio pasa a 4 en verde.
+S8 aprobado: 4 casos.

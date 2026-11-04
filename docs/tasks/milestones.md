@@ -39,5 +39,5 @@ Objetivo: entregar el 16 de noviembre el panel con las cinco métricas y las dos
 ## Requieren acción tuya
 
 - **Antes de T02:** crear el proyecto de Supabase y entregar sus cadenas de conexión.
-- **Antes de T04 y T09:** decidir S8 (los 8 casos).
+- S8 aprobado: 4 casos.
 - **Antes de T15:** tener una cuenta de Vercel y definir `DEMO_PASSWORD`.

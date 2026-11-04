@@ -54,7 +54,7 @@ Crea la pantalla `/panel` con las cinco métricas y las dos etiquetas de transpa
 ## Context
 
 - `docs/spec-rebanada-a.md`, criterio 1, «Panel» y «Etiquetas visibles».
-- `docs/spec-review-v2.md`, S15.
+- `docs/spec-review-v2.md`, S6.
 
 ## Definition of Ready
 

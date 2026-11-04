@@ -64,4 +64,4 @@ Agrega la entidad `Evento` y registra cada paso del flujo, para que el panel se 
 
 ## Notes
 
-Después de desplegar esta tarea, corre el seed: los recorridos anteriores no tienen eventos. Registra S13, pendiente de aprobación.
+Después de desplegar esta tarea, corre el seed: los recorridos anteriores no tienen eventos. S13 aprobado.

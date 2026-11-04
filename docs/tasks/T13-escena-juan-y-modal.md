@@ -51,7 +51,7 @@ Muestra el efecto de la reforma en Juan, con el período cerrado intacto, y perm
 ## Context
 
 - `docs/spec-rebanada-a.md`, sección 3, paso 4, «Estado inicial» y «Modal de versión».
-- `promt03.md`, S2.
+- `docs/spec-rebanada-a.md`, sección 3, «Estado inicial del sistema», que recoge S2.
 
 ## Definition of Ready
 

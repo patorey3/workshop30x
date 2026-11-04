@@ -39,7 +39,7 @@ Implementa `GET /api/panel`, que deriva las cinco métricas solo de los eventos.
 ## Acceptance Criteria
 
 - [ ] Tras un recorrido aprobado de $482: métrica 2 con 1 total, 1 aprobada y 0 rechazadas.
-- [ ] Métrica 3 con 8 casos, 8 verdes y 0 rojos, y sus valores antes y después.
+- [ ] Métrica 3 con 4 casos, 4 verdes y 0 rojos, y sus valores antes y después.
 - [ ] Métrica 4 con las versiones 2025-01-01 y 2026-01-01.
 - [ ] Métrica 5 con 2 períodos.
 - [ ] La métrica 1 coincide con la diferencia entre las fechas de ambos eventos.
@@ -54,7 +54,7 @@ Implementa `GET /api/panel`, que deriva las cinco métricas solo de los eventos.
 ## Context
 
 - `docs/spec-rebanada-a.md`, «Panel (16 de noviembre)».
-- `docs/spec-review-v2.md`, S9 y S13.
+- `docs/spec-review-v2.md`, S8 y S13.
 
 ## Definition of Ready
 
@@ -64,4 +64,4 @@ Implementa `GET /api/panel`, que deriva las cinco métricas solo de los eventos.
 
 ## Notes
 
-Si S8 vuelve a 4 casos, la métrica 3 pasa a 4 casos y 4 verdes.
+S8 aprobado: 4 casos.

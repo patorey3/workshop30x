@@ -62,4 +62,4 @@ Protege páginas y API con HTTP Basic Auth en el middleware de Next.js, con la c
 
 ## Notes
 
-La contraseña nunca se registra en logs ni se incluye en el código. Registra S12, pendiente de aprobación.
+La contraseña nunca se registra en logs ni se incluye en el código. S12 aprobado.

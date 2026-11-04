@@ -64,6 +64,6 @@ Publica el flujo manual para la entrega del 9 de noviembre y comprueba en produc
 
 ## Notes
 
-- `promt03.md` no lista esta tarea, pero se agrega porque la entrega del 9 es un despliegue.
+- Esta tarea existe porque la entrega del 9 es un despliegue (`docs/spec-rebanada-a.md`, «Hitos» y «Entrega del 9 de noviembre»).
 - Conviene adelantar una prueba de conexión si T02 presenta problemas de pooling.
 - Antes de grabar el demo, reemplaza el texto de ejemplo por el texto real de MDT-2025-195 de una fuente verificable.

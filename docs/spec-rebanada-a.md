@@ -4,7 +4,7 @@
 **Origen:** rebanada A de [rebanadas-candidatas.md](rebanadas-candidatas.md); requisitos de [PRD.md](PRD.md); moat de [PVB.md](PVB.md), sección 3
 **Hitos:** despliegue el 9 de noviembre; panel y video el 16; Demo Day el 18
 
-Los supuestos S1 a S7 de [spec-review.md](spec-review.md) quedaron aprobados y ya no se marcan en el texto. Los supuestos nuevos, pendientes de aprobación, están en [spec-review-v2.md](spec-review-v2.md).
+Los supuestos S1 a S7 de [spec-review.md](spec-review.md) quedaron aprobados y ya no se marcan en el texto. Los supuestos S1 a S15 quedaron aprobados o descartados el 2026-11-04; el detalle está en [spec-review-v2.md](spec-review-v2.md). Ningún supuesto queda abierto.
 
 ## 1. Problema
 
