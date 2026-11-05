@@ -14,14 +14,14 @@ parent: null
 
 ## Summary
 
-Crea la base del repositorio con Next.js 14 (App Router), TypeScript, Prisma y Vitest, con una prueba que corre con `npm test`.
+Crea la base del repositorio con Next.js 15.5.x (App Router), TypeScript, Prisma y Vitest, con una prueba que corre con `npm test`.
 
 ## Scope
 
 ### In scope
 
-- Next.js 14 con App Router, TypeScript en modo estricto y carpeta `src/`.
-- Next.js en la última versión 14.2.x, nunca inferior a 14.2.25 (T14 depende de ese parche).
+- Next.js 15.5.x con App Router, TypeScript en modo estricto y carpeta `src/`.
+- Next.js en la última versión 15.5.x, nunca inferior a 15.5.28, la primera sin los avisos críticos de ejecución remota de código. Esa rama ya incluye el parche de CVE-2025-29927, del que depende T14.
 - Prisma instalado con un `prisma/schema.prisma` inicial, sin modelos ni conexión real.
 - Vitest, con `npm test` como `vitest run`, para que `npm test -- <filtro>` funcione.
 - Una prueba mínima que no necesita base de datos.
@@ -48,7 +48,7 @@ Crea la base del repositorio con Next.js 14 (App Router), TypeScript, Prisma y V
 - [ ] `npm test -- smoke` ejecuta solo esa prueba.
 - [ ] `npm run build` termina con código 0.
 - [ ] `npx prisma generate` termina con código 0 sin una base de datos disponible.
-- [ ] `npm ls next` muestra una versión 14.2.x igual o superior a 14.2.25.
+- [ ] `npm ls next` muestra una versión 15.5.x igual o superior a 15.5.28.
 - [ ] `npx tsc --noEmit` termina con código 0.
 - [ ] `git status` no muestra `node_modules`, `.next` ni archivos `.env`.
 

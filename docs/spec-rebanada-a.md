@@ -95,7 +95,7 @@ Estos son los resultados esperados con cada propuesta:
 
 | Tema | Decisión |
 | --- | --- |
-| Aplicación | Next.js 14 (App Router) y TypeScript |
+| Aplicación | Next.js 15.5.x (App Router) y TypeScript |
 | Base de datos | Prisma con Postgres en Supabase, también en desarrollo |
 | Despliegue | Vercel, sin plan Pro |
 | Acceso | HTTP Basic Auth en el middleware de Next.js. La contraseña se lee de la variable de entorno `DEMO_PASSWORD`. No se usa Vercel Password Protection |

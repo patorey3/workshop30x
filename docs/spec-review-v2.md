@@ -72,7 +72,7 @@ T3 y D3 no son críticos, así que no afectan a la nota.
 - **Prisma con Supabase desde Vercel:** falta comprobar la conexión con pooling en un despliegue real. Se hace en T15, y conviene adelantarlo si T02 presenta problemas.
 - **Texto oficial de MDT-2025-195:** el valor y la vigencia se confirmaron en comentarios legales y prensa, no en el Registro Oficial. Hay que reemplazar el texto de ejemplo antes de grabar el demo.
 - **Fórmula del décimo cuarto mensualizado:** SBU ÷ 12 aparece en prensa, sin fuente normativa confirmada. S14 fija la convención de redondeo para el demo, pero no aporta esa fuente.
-- **Middleware de Next.js:** la protección debe resistir el encabezado `x-middleware-subrequest` (CVE-2025-29927). T14 lo prueba, y T01 exige Next.js 14.2.25 o superior.
+- **Middleware de Next.js:** la protección debe resistir el encabezado `x-middleware-subrequest` (CVE-2025-29927). T14 lo prueba, y T01 exige Next.js 15.5.28 o superior.
 - **Pausa de Supabase por inactividad:** T15 debe registrar si ocurre y qué hacer antes del 18 de noviembre.
 
 ## 5. Los vacíos más graves
