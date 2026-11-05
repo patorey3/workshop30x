@@ -23,7 +23,7 @@ Crea `npm run db:seed`, que restablece el estado inicial del demo con la escena 
 - Dos empresas ficticias, con Juan en una y Ana en la otra, ambos con sueldo de $600 y `optoMensualizacion` activa.
 - Juan: diciembre de 2025 `CERRADO` y enero de 2026 `ABIERTO`.
 - Ana: julio de 2025 `CERRADO` y febrero de 2026 `ABIERTO`.
-- Versión 2025 publicada: $470 desde 2025-01-01, fuente «Fuente por verificar», sin cita y con estado «Estado inicial del sistema».
+- Versión 2025 publicada: $470 desde 2025-01-01, fuente «MDT-2024-300, vigente 2025-01-01», la cita del comunicado oficial (spec, sección 3, «Cita de la versión 2025»), sin aprobador y con estado «Estado inicial del sistema».
 - Una `LineaNomina` de $39.17 con versión 2025 en cada uno de los cuatro períodos.
 - Casos RC-01 a RC-04, con los valores de la spec.
 - Datos de referencia de la versión 2026, sin publicar: $482 desde 2026-01-01, Acuerdo MDT-2025-195 y su cita, listos para ingresarse en el flujo.
@@ -45,7 +45,7 @@ Crea `npm run db:seed`, que restablece el estado inicial del demo con la escena 
 ## Acceptance Criteria
 
 - [ ] Tras el seed hay 2 empresas, 2 empleados, 4 períodos y 4 líneas de nómina.
-- [ ] Solo existe una `VersionMotor`: $470 desde 2025-01-01, sin cita, sin aprobador y sin mencionar ningún acuerdo.
+- [ ] Solo existe una `VersionMotor`: $470 desde 2025-01-01, con fuente MDT-2024-300, la cita literal del comunicado oficial y sin aprobador.
 - [ ] Los períodos cerrados son diciembre de 2025 (Juan) y julio de 2025 (Ana), y los abiertos, enero de 2026 (Juan) y febrero de 2026 (Ana).
 - [ ] Las 4 líneas valen $39.17 y apuntan a la versión 2025.
 - [ ] Existen exactamente 4 casos: RC-01 Juan dic-2025 $39.17, RC-02 Juan ene-2026 $40.17, RC-03 Ana jul-2025 $39.17 y RC-04 Ana feb-2026 $40.17.
@@ -75,4 +75,4 @@ Crea `npm run db:seed`, que restablece el estado inicial del demo con la escena 
 - S8 aprobado: 4 casos (RC-01 a RC-04). No se agregan RC-05 a RC-08.
 - **La versión 2026 no se publica en el seed.** Publicarla contradiría BR-01 y el paso 6 del flujo, dejaría sin efecto la aprobación y haría que Juan empezara en $40.17. También contradiría T16, que espera solo el evento de la versión 2025 tras el seed.
 - **El texto de la norma es de ejemplo.** El texto oficial de MDT-2025-195 no está verificado, así que `NORMA_DEMO_2026.texto` debe rotularse como ejemplo. T15 indica reemplazarlo antes de grabar el demo.
-- La fuente del SBU 2025 sigue por verificar (S2).
+- La fuente del SBU 2025 es MDT-2024-300, vigente 2025-01-01 (S2).

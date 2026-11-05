@@ -22,7 +22,7 @@ Muestra el efecto de la reforma en Juan, con el período cerrado intacto, y perm
 
 - Escena en `/propuestas/:id`: diciembre de 2025 (cerrado) y enero de 2026 (abierto), con valores antes y después.
 - Modal de versión, con parámetro, valor, vigencia, fuente y estado.
-- Versión 2025: «Fuente por verificar», sin cita.
+- Versión 2025: Acuerdo Ministerial MDT-2024-300 y la cita textual del comunicado oficial (spec, sección 3, «Cita de la versión 2025»).
 - Versión 2026: Acuerdo MDT-2025-195, cita, `experto_demo` y fecha de aprobación.
 
 ### Out of scope
@@ -38,7 +38,7 @@ Muestra el efecto de la reforma en Juan, con el período cerrado intacto, y perm
 
 - [ ] Antes de aprobar: diciembre sigue en $39.17 y enero muestra $39.17 → $40.17 como vista previa.
 - [ ] Después de aprobar: diciembre sigue en $39.17 con versión 2025, y enero queda en $40.17 con versión 2026.
-- [ ] El modal de 2025 dice «Fuente por verificar» y no nombra ningún acuerdo.
+- [ ] El modal de 2025 muestra MDT-2024-300 y la cita textual del comunicado oficial.
 - [ ] El modal de 2026 muestra MDT-2025-195 y su cita textual.
 - [ ] El modal se abre y se cierra con teclado.
 - [ ] Con una propuesta en rojo, la vista previa no se presenta como un resultado aprobado.

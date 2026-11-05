@@ -16,7 +16,7 @@ El experto legal interno, que decide si una reforma entra al motor de reglas. En
 
 ## 3. El flujo, paso a paso
 
-**Estado inicial del sistema:** parámetro SBU 2025 ($470) vigente desde el 1 de enero de 2025, fuente por verificar. Ni el demo ni la interfaz afirman que un acuerdo de 2025 fija ese valor.
+**Estado inicial del sistema:** parámetro SBU 2025 ($470), Acuerdo Ministerial MDT-2024-300, vigente desde el 1 de enero de 2025.
 
 **Caso del demo:** reproducción del ingreso del Acuerdo MDT-2025-195, el acuerdo documentado, que fija el SBU de 2026 en $482. Es la norma que el sistema ingresa en este flujo. No es una detección en vivo, y se dice así.
 
@@ -34,8 +34,10 @@ Desde la escena de Juan, cada valor abre un modal con los datos de la versión q
 
 | Versión | Valor | Vigente desde | Fuente | Estado |
 | --- | --- | --- | --- | --- |
-| 2025 | $470 | 2025-01-01 | «Fuente por verificar», sin cita | Estado inicial del sistema |
+| 2025 | $470 | 2025-01-01 | Acuerdo Ministerial MDT-2024-300, cita textual | Estado inicial del sistema |
 | 2026 | $482 | 2026-01-01 | Acuerdo MDT-2025-195, con su cita textual | Aprobada por `experto_demo`, con fecha de aprobación |
+
+**Cita de la versión 2025:** «El Ministerio del Trabajo fijó el Salario Básico Unificado (SBU) del trabajador en general para el año 2025 en USD. 470,00 mensuales. […] El nuevo Salario Básico Unificado (SBU) regirá a partir del 01 de enero de 2025, según el Acuerdo Ministerial Nro. MDT-2024-300» Son dos fragmentos literales del [comunicado oficial del Ministerio del Trabajo](https://www.trabajo.gob.ec/el-salario-basico-unificado-del-trabajador-en-general-para-el-ano-2025-sera-de-usd-47000/): el primero fija el valor, y el segundo, la vigencia y el acuerdo. Se guardan juntos, en un solo campo y con `[…]` entre ellos. Es una cita del comunicado, no del texto del acuerdo.
 
 ### Reglas de negocio
 
@@ -60,6 +62,8 @@ Juan y Ana son empleados ficticios de dos empresas ficticias, con sueldo de $600
 | RC-02 | Juan, enero de 2026 | $40.17 |
 | RC-03 | Ana, julio de 2025 | $39.17 |
 | RC-04 | Ana, febrero de 2026 | $40.17 |
+
+Nota para el demo: algunas calculadoras publican $39,16 para 2025 porque truncan. Este sistema usa redondeo medio-arriba (BR-06) y por eso muestra $39,17. La diferencia es de convención, no de cálculo.
 
 Estos son los resultados esperados con cada propuesta:
 
