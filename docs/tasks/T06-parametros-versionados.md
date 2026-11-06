@@ -69,3 +69,5 @@ Implementa BR-04: resuelve qué versión del SBU corresponde a un período segú
 
 - T06 no depende de T04: la función pura se prueba con listas fijas, y `obtenerVersionesPublicadas`, con filas creadas por la propia prueba.
 - Compara las fechas como UTC o como `AAAA-MM-DD`. En Ecuador (UTC-5), una conversión local convierte 2026-01-01 en 2025-12-31 y elegiría la versión equivocada.
+- Implementación: la firma es `versionVigenteEn(versiones, primerDia)`, como pide el alcance, no `(anio, mes)`; quien llama combina `primerDiaDePeriodo(anio, mes)` con ella. La función es genérica sobre `{ vigenteDesde: Date }` y compara `AAAA-MM-DD` en UTC. `obtenerVersionesPublicadas` devuelve todas las filas `VersionMotor` con `parametro = 'SBU'` (toda fila existente está publicada: `INICIAL` o `APROBADA`), ordenadas por vigencia.
+- Desvío respecto del prompt de ejecución: pedía que, con solo la versión 2025, enero de 2026 lanzara error. Según BR-04 la versión vigente desde 2025-01-01 sigue cubriendo enero de 2026 (no hay fecha de fin), así que la prueba verifica que resuelve a 2025. El error solo se lanza cuando la fecha es anterior a todas las versiones o la lista está vacía.
