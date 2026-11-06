@@ -78,3 +78,16 @@ Define en Prisma las entidades de la ola 1 y crea su migración inicial, con res
 - `Evento` figura en la lista de datos de la spec, pero se crea en T16, según el plan.
 - El pedido original del plan menciona «aprobaciones», y la spec no incluye esa entidad. La decisión se guarda en `Propuesta`, y el aprobador se copia en `VersionMotor`.
 - `Norma.identificador` no es único: el demo puede reingresar la misma norma.
+
+### Notas de implementación (2026-11-06)
+
+- Los datos que el modelo debe soportar están consolidados en `docs/seed-data.md`.
+- Se añadieron campos cosméticos opcionales, que no intervienen en los cálculos: `Empresa.ruc`, `ciudad` y `representante`; `Empleado.cedula`, `cargo` y `fechaIngreso`. También `LineaNomina.concepto`, con valor por defecto «Décimo cuarto mensualizado».
+- `VersionMotor.estado` es un enum `INICIAL | APROBADA`. `INICIAL` se muestra como «Estado inicial del sistema» (T04, T13). `parametro` es texto: BR-03 se valida en la aplicación.
+- `OrigenPropuesta` usa `manual | llm` en minúsculas, como el contrato de la propuesta (spec §6).
+- `CasoRegresion` referencia `empleadoId` y `periodoId`, y `Periodo` pertenece a la empresa (`@@unique([empresaId, anio, mes])`).
+- `VersionMotor.propuestaId` es único: una propuesta publica como mucho una versión.
+- `npx prisma migrate dev --name modelo_inicial` funcionó contra Supabase, base de datos sombra incluida, sin pasos extra. La migración quedó aplicada en `public`.
+- `db:test:migrate` ejecuta `prisma migrate deploy` con `DATABASE_URL` y `DIRECT_URL` sustituidas por `TEST_DATABASE_URL`, tras exigir `schema=test`. Prisma crea el esquema si no existe, así que no hace falta un `CREATE SCHEMA` explícito. Hay que correrlo antes de `npm test` cada vez que se añade una migración.
+- Las pruebas de NOT NULL insertan con SQL crudo para comprobar la restricción en la base de datos, no solo la validación del cliente. Comprueban el código 23502 de Postgres, porque el mensaje no nombra la columna.
+- `src/test/limpiar.ts` vacía las tablas con `TRUNCATE ... CASCADE` y se niega a correr si `DATABASE_URL` no tiene `schema=test`. T04 y las tareas siguientes pueden reutilizarlo. Cuando T16 cree `Evento`, hay que añadir esa tabla a la lista.

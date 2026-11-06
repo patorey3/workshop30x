@@ -9,3 +9,166 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+// Datos de referencia: docs/seed-data.md. Importes en Decimal(10,2) y vigencias en @db.Date.
+
+enum OrigenPropuesta {
+  manual
+  llm
+}
+
+enum EstadoPropuesta {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+}
+
+// INICIAL se muestra como «Estado inicial del sistema» (versión 2025 del seed);
+// APROBADA, como aprobada por su aprobador y fecha (modal de versión, spec §3).
+enum EstadoVersion {
+  INICIAL
+  APROBADA
+}
+
+enum EstadoPeriodo {
+  ABIERTO
+  CERRADO
+}
+
+model Norma {
+  id            String      @id @default(cuid())
+  // No es único: el demo puede reingresar la misma norma.
+  identificador String
+  fecha         DateTime    @db.Date
+  texto         String
+  creadaEn      DateTime    @default(now())
+  propuestas    Propuesta[]
+}
+
+model Propuesta {
+  id            String             @id @default(cuid())
+  normaId       String
+  norma         Norma              @relation(fields: [normaId], references: [id], onDelete: Cascade)
+  parametro     String
+  valor         Decimal            @db.Decimal(10, 2)
+  vigenteDesde  DateTime           @db.Date
+  citaTextual   String
+  origen        OrigenPropuesta
+  // BR-07: se decide una sola vez; la decisión se guarda aquí.
+  estado        EstadoPropuesta    @default(PENDIENTE)
+  actor         String?
+  decididaEn    DateTime?
+  motivoRechazo String?
+  creadaEn      DateTime           @default(now())
+  corridas      CorridaRegresion[]
+  version       VersionMotor?
+}
+
+model VersionMotor {
+  id           String        @id @default(cuid())
+  parametro    String
+  valor        Decimal       @db.Decimal(10, 2)
+  vigenteDesde DateTime      @db.Date
+  fuente       String
+  citaTextual  String
+  estado       EstadoVersion
+  // Opcionales: la versión 2025 del seed no tiene aprobador.
+  aprobadoPor  String?
+  aprobadaEn   DateTime?
+  propuestaId  String?       @unique
+  propuesta    Propuesta?    @relation(fields: [propuestaId], references: [id])
+  creadaEn     DateTime      @default(now())
+  lineas       LineaNomina[]
+  avisos       Aviso[]
+
+  @@unique([parametro, vigenteDesde])
+}
+
+model Empresa {
+  id            String     @id @default(cuid())
+  nombre        String
+  // Campos cosméticos: no intervienen en los cálculos.
+  ruc           String?
+  ciudad        String?
+  representante String?
+  empleados     Empleado[]
+  periodos      Periodo[]
+  avisos        Aviso[]
+}
+
+model Empleado {
+  id                 String          @id @default(cuid())
+  empresaId          String
+  empresa            Empresa         @relation(fields: [empresaId], references: [id])
+  nombre             String
+  sueldo             Decimal         @db.Decimal(10, 2)
+  optoMensualizacion Boolean
+  // Campos cosméticos: no intervienen en los cálculos.
+  cedula             String?
+  cargo              String?
+  fechaIngreso       DateTime?       @db.Date
+  lineas             LineaNomina[]
+  casos              CasoRegresion[]
+}
+
+model Periodo {
+  id        String          @id @default(cuid())
+  empresaId String
+  empresa   Empresa         @relation(fields: [empresaId], references: [id])
+  anio      Int
+  mes       Int
+  estado    EstadoPeriodo
+  lineas    LineaNomina[]
+  casos     CasoRegresion[]
+
+  @@unique([empresaId, anio, mes])
+}
+
+// BR-05: valor y versión guardados y obligatorios.
+model LineaNomina {
+  id            String       @id @default(cuid())
+  empleadoId    String
+  empleado      Empleado     @relation(fields: [empleadoId], references: [id])
+  periodoId     String
+  periodo       Periodo      @relation(fields: [periodoId], references: [id])
+  concepto      String       @default("Décimo cuarto mensualizado")
+  valor         Decimal      @db.Decimal(10, 2)
+  versionId     String
+  version       VersionMotor @relation(fields: [versionId], references: [id])
+  actualizadaEn DateTime     @default(now()) @updatedAt
+
+  @@unique([empleadoId, periodoId])
+}
+
+model CasoRegresion {
+  id         String   @id @default(cuid())
+  codigo     String   @unique
+  empleadoId String
+  empleado   Empleado @relation(fields: [empleadoId], references: [id])
+  periodoId  String
+  periodo    Periodo  @relation(fields: [periodoId], references: [id])
+  esperado   Decimal  @db.Decimal(10, 2)
+}
+
+model CorridaRegresion {
+  id          String    @id @default(cuid())
+  propuestaId String
+  propuesta   Propuesta @relation(fields: [propuestaId], references: [id], onDelete: Cascade)
+  total       Int
+  verdes      Int
+  rojos       Int
+  resultados  Json
+  ejecutadaEn DateTime  @default(now())
+}
+
+model Aviso {
+  id        String       @id @default(cuid())
+  empresaId String
+  empresa   Empresa      @relation(fields: [empresaId], references: [id])
+  versionId String
+  version   VersionMotor @relation(fields: [versionId], references: [id])
+  mensaje   String
+  creadoEn  DateTime     @default(now())
+
+  @@unique([empresaId, versionId])
+}
