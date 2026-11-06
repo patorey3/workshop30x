@@ -23,7 +23,7 @@ Implementa `POST /api/normas` y `POST /api/normas/:id/propuesta`, para ingresar 
 - `POST /api/normas`, con identificador, fecha y texto.
 - `POST /api/normas/:id/propuesta`, con el contrato de la spec.
 - Validación de BR-03: solo se admite el parámetro `SBU`.
-- Validación de la cita: no vacía y presente literalmente en el texto de la norma.
+- Validación de la cita (BR-08): no vacía y presente literalmente en el texto de la norma, tras normalizar los espacios en blanco de ambos lados con `normalizarEspacios` (cada secuencia de espacios, tabuladores, saltos de línea o espacios duros pasa a un espacio, y se recortan los extremos). La cita se guarda tal como llegó.
 - Validación de `valor` (positivo, hasta 2 decimales) y `vigenteDesde` (fecha real `AAAA-MM-DD`).
 - `origen` fijado en `manual` por el servidor, sin importar lo que envíe el cliente.
 - Propuesta creada en estado `PENDIENTE`.
@@ -47,7 +47,9 @@ Implementa `POST /api/normas` y `POST /api/normas/:id/propuesta`, para ingresar 
 - [ ] `POST /api/normas` sin identificador, fecha o texto responde 400.
 - [ ] La propuesta de $482 desde 2026-01-01, con una cita literal, responde 201 con estado `PENDIENTE` y origen `manual`.
 - [ ] Un `parametro` distinto de `SBU` responde 422 y no crea ninguna fila (BR-03).
-- [ ] Una cita ausente del texto, o una cadena vacía, responde 422 (BR-08).
+- [ ] Una cita ausente del texto, una cadena vacía o una cadena solo de espacios responde 422 (BR-08).
+- [ ] Una cita que difiere del texto solo en espacios (un salto de línea donde la norma tiene un espacio, o espacios dobles) se acepta.
+- [ ] Una cita que difiere del texto en una tilde, una mayúscula o unas comillas responde 422.
 - [ ] Una propuesta con `origen: "llm"` en el cuerpo se guarda con origen `manual`.
 - [ ] Una norma inexistente responde 404.
 - [ ] Un JSON mal formado responde 400, no 500.
@@ -73,6 +75,6 @@ Implementa `POST /api/normas` y `POST /api/normas/:id/propuesta`, para ingresar 
 ## Notes
 
 - BR-08 habla de la salida del LLM, pero el criterio 3 dice que la propuesta manual «recorre las mismas reglas». Por eso la cita también se valida aquí.
-- La comparación de la cita es literal, sin normalizar mayúsculas ni espacios.
+- La comparación de la cita solo normaliza los espacios en blanco, decidido el 2026-11-05: el LLM (ola 2) y quien copia a mano pueden alterar saltos de línea sin cambiar el contenido. Mayúsculas, tildes, comillas y puntuación se comparan tal cual. `normalizarEspacios` se exporta desde `src/lib/propuestas.ts` para que la ola 2 la reutilice.
 - La spec no define los códigos 400, 404 y 422. Son una decisión de esta tarea. El 409 de la spec corresponde a T11.
 - T16 modificará estas rutas para emitir eventos.

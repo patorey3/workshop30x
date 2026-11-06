@@ -50,7 +50,7 @@ Desde la escena de Juan, cada valor abre un modal con los datos de la versión q
 | BR-05 | Los períodos cerrados guardan valor y versión, y nunca se recalculan |
 | BR-06 | Décimo cuarto mensualizado = SBU ÷ 12, redondeado a 2 decimales, mitad hacia arriba. Se calcula sobre mes completo y para empleados que optaron por la mensualización |
 | BR-07 | Una propuesta solo se decide una vez; una segunda decisión se rechaza |
-| BR-08 | La salida del LLM se valida contra el esquema y no se acepta si su cita no aparece textualmente en la norma |
+| BR-08 | La salida del LLM se valida contra el esquema, y ninguna propuesta, del LLM o manual, se acepta si su cita no aparece textualmente en la norma. Antes de comparar, en la cita y en el texto cada secuencia de espacios en blanco (espacios, tabuladores, saltos de línea, espacios duros) se reduce a un espacio y se recortan los extremos. Mayúsculas, tildes, comillas y puntuación se comparan tal cual |
 
 ### Casos de regresión precargados
 
@@ -99,7 +99,7 @@ Estos son los resultados esperados con cada propuesta:
 | Base de datos | Prisma con Postgres en Supabase, también en desarrollo |
 | Despliegue | Vercel, sin plan Pro |
 | Acceso | HTTP Basic Auth en el middleware de Next.js. La contraseña se lee de la variable de entorno `DEMO_PASSWORD`. No se usa Vercel Password Protection |
-| LLM | Un solo endpoint con prompt cerrado y salida JSON. **Pregunta abierta:** ¿Claude Haiku o GPT-4o-mini? |
+| LLM | Ola 2 (fuera del plan activo hasta después del demo). Un solo endpoint con prompt cerrado y salida JSON. Proveedor elegido el 2026-11-05: Claude Haiku 5.5 (`claude-haiku-5-5`). No se implementa en la ola 1 ni en la ola 3. |
 | Pruebas | Vitest, con `npm test`. No se declaró TDD |
 
 **Datos:** `Norma`, `Propuesta`, `VersionMotor`, `CasoRegresion`, `CorridaRegresion`, `Empresa`, `Empleado`, `Periodo`, `LineaNomina` (valor y versión guardados), `Aviso` y `Evento` (alimenta el panel). `npm run db:seed` restablece el estado inicial del demo.
