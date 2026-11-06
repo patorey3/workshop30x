@@ -8,7 +8,8 @@
     "start": "next start",
     "test": "vitest run",
     "db:check": "tsx --env-file=.env scripts/db-check.ts",
-    "db:test:migrate": "tsx --env-file=.env scripts/db-test-migrate.ts"
+    "db:test:migrate": "tsx --env-file=.env scripts/db-test-migrate.ts",
+    "db:seed": "tsx --env-file=.env prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",
