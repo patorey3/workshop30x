@@ -74,3 +74,13 @@ Deja Prisma apuntando a Postgres en Supabase con `DATABASE_URL` y `DIRECT_URL`, 
 - Copia las cadenas desde el panel de Supabase. El modo de transacción del pooler suele requerir `?pgbouncer=true&connection_limit=1` en `DATABASE_URL`.
 - Si la conexión directa falla por no tener IPv6, usa el pooler en modo sesión como `DIRECT_URL`.
 - La prueba definitiva del pooling desde Vercel queda en T15. Si aquí aparecen problemas, conviene adelantarla.
+
+### Notas de implementación (2026-11-06)
+
+- Prisma 6.19.3 acepta `url` y `directUrl` en `schema.prisma` sin cambios respecto al plan. La CLI anuncia Prisma 8 (rc); no se actualiza (ver CLAUDE.md, versiones fijadas).
+- Las variables viven en `.env`, no en `.env.local`: la CLI de Prisma solo lee `.env` de forma automática. `.gitignore` ya cubría `.env*` con la excepción `!.env.example`.
+- `TEST_DATABASE_URL` se basa en `DIRECT_URL` (sin pgbouncer) más `schema=test`, para que `db:test:migrate` (T03) pueda migrar ese esquema.
+- `db:check` corre con `tsx` (añadido como dependencia de desarrollo, 4.19.2 exacta) y `--env-file=.env` de Node 20.6+. Crea un `PrismaClient` por URL con `datasourceUrl` y redacta las credenciales de cualquier error (`src/lib/redactar.ts`).
+- Vitest carga `.env` con `loadEnv` de Vite. `src/test/setup.ts` exige `TEST_DATABASE_URL` con `schema=test` y la copia a `DATABASE_URL`, para que el cliente de `src/lib/db.ts` apunte al esquema de pruebas. Sin `.env`, ninguna prueba arranca, ni siquiera la de humo.
+- Antes de T03 el esquema `test` todavía no existe en Postgres; `SELECT 1` funciona igual.
+- Vitest muestra el aviso «The CJS build of Vite's Node API is deprecated», porque el proyecto no es `"type": "module"`. Es inofensivo; se quitaría renombrando el archivo a `vitest.config.mts`.

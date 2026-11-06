@@ -2,7 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// DATABASE_URL: pooler de Supabase en modo transacción (aplicación).
+// DIRECT_URL: conexión directa, o pooler en modo sesión (migraciones).
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
