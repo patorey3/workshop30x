@@ -9,3 +9,6 @@ next-env.d.ts
 # Claude Code (config personal)
 CLAUDE.md
 .claude/
+
+# Prompts personales
+promt*.md
