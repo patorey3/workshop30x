@@ -63,7 +63,7 @@ T3 y D3 no son críticos, así que no afectan a la nota.
 | **Versión 2026 en los datos iniciales** | Publicarla en el seed contradiría BR-01, el paso 6 del flujo y T16 | T04 la deja como datos de referencia sin publicar, y T11 la publica al aprobar |
 | **Cita en la propuesta manual** | BR-08 habla del LLM, pero el criterio 3 de la spec pide las mismas reglas para la propuesta manual | T07 valida la cita también en la manual |
 | **Fase de la certificación** | El PRD la ubica en la fase 1, y el texto acordado decía fase 2 | Resuelto por S6 |
-| **Acuerdo MDT-2025-195** | Es el que fija $482 para 2026, y no hay un acuerdo identificado para los $470 de 2025 | Resuelto por S2: la versión 2025 dice «Fuente por verificar» |
+| **Acuerdo MDT-2025-195** | Es el que fija $482 para 2026. Los $470 de 2025 corresponden a MDT-2024-300 | Resuelto por S2: la versión 2025 cita el comunicado oficial del Ministerio del Trabajo |
 | **Modal de versión** | La spec v1 no lo definía | Agregado en la spec v2. T13 pide revisarlo antes de esa tarea |
 | **Artefactos ausentes** | No existen `AGENTS.md`, `README.md`, `design.md` ni código | Vacíos registrados. T01 inicia el código y T15 crea el `README.md` |
 
@@ -72,13 +72,12 @@ T3 y D3 no son críticos, así que no afectan a la nota.
 - **Prisma con Supabase desde Vercel:** falta comprobar la conexión con pooling en un despliegue real. Se hace en T15, y conviene adelantarlo si T02 presenta problemas.
 - **Texto oficial de MDT-2025-195:** el valor y la vigencia se confirmaron en comentarios legales y prensa, no en el Registro Oficial. Hay que reemplazar el texto de ejemplo antes de grabar el demo.
 - **Fórmula del décimo cuarto mensualizado:** SBU ÷ 12 aparece en prensa, sin fuente normativa confirmada. S14 fija la convención de redondeo para el demo, pero no aporta esa fuente.
-- **Fuente del SBU 2025:** sigue sin identificarse el acuerdo de los $470 (S2).
-- **Middleware de Next.js:** la protección debe resistir el encabezado `x-middleware-subrequest` (CVE-2025-29927). T14 lo prueba, y T01 exige Next.js 14.2.25 o superior.
+- **Middleware de Next.js:** la protección debe resistir el encabezado `x-middleware-subrequest` (CVE-2025-29927). T14 lo prueba, y T01 exige Next.js 15.5.28 o superior.
 - **Pausa de Supabase por inactividad:** T15 debe registrar si ocurre y qué hacer antes del 18 de noviembre.
 
 ## 5. Los vacíos más graves
 
-1. **Validación legal limitada.** Falta la fuente del SBU 2025 y la confirmación normativa de la fórmula y del redondeo, y ningún experto revisó los casos. No bloquea la implementación, pero sí la credibilidad ante un contador en la audiencia.
+1. **Validación legal limitada.** Falta la confirmación normativa de la fórmula y del redondeo, y ningún experto revisó los casos. No bloquea la implementación, pero sí la credibilidad ante un contador en la audiencia.
 2. **Conexión a Supabase desde Vercel sin probar.** Un problema de pooling afectaría directamente a la entrega del 9 de noviembre.
 
 ## 6. Supuestos
@@ -86,7 +85,7 @@ T3 y D3 no son críticos, así que no afectan a la nota.
 | # | Supuesto | Estado | Detalle o motivo |
 | --- | --- | --- | --- |
 | S1 | Mensualizado = SBU ÷ 12, con redondeo a 2 decimales, mitad hacia arriba; Juan y Ana ganan $600 y optaron por la mensualización | Aprobado | Tal cual |
-| S2 | El SBU 2025 ($470) se respalda provisionalmente en el PVB y la prensa hasta identificar su acuerdo | Aprobado | Con cambio de narrativa: «parámetro SBU 2025 vigente desde el 1 de enero de 2025, fuente por verificar». No se afirma que un acuerdo de 2025 fije los $470 |
+| S2 | El SBU 2025 ($470) se respalda provisionalmente en el PVB y la prensa hasta identificar su acuerdo | Aprobado y verificado con fuente oficial (MDT-2024-300) | Acuerdo Ministerial MDT-2024-300, vigente desde el 1 de enero de 2025. Fuente: Ministerio del Trabajo y Registro Oficial (Segundo Suplemento No. 708) |
 | S3 | Postgres en Supabase en desarrollo y producción, sin SQLite | Aprobado | Tal cual |
 | S4 | HTTP Basic Auth en el middleware de Next.js, con la contraseña en `DEMO_PASSWORD` y sin Vercel Pro | Aprobado | Sustituye a la propuesta original, que prefería Password Protection con Vercel Pro |
 | S5 | Vitest con `npm test` | Aprobado | Tal cual |
@@ -109,3 +108,4 @@ Heredadas de [spec-review.md](spec-review.md) y de T14. No se volvieron a consul
 - [UTPL: boletín 31-2025](https://procuraduria.utpl.edu.ec/Boletines/BOLETÍN_31-2025.pdf), cuyo campo de vigencia indica una fecha distinta, probablemente por error de transcripción, aunque el mismo documento dice que rige desde el 1 de enero de 2026
 - [Extra: cálculo del décimo cuarto de 2025](https://www.extra.ec/noticia/ecuador/decimo-cuarto-sueldo-2025-ecuador-bono-escolar-calcula-ejemplos-121647.html)
 - [Next.js: aviso de CVE-2025-29927](https://nextjs.org/blog/cve-2025-29927)
+- [Ministerio del Trabajo: comunicado del SBU 2025 de USD 470,00](https://www.trabajo.gob.ec/el-salario-basico-unificado-del-trabajador-en-general-para-el-ano-2025-sera-de-usd-47000/), consultado el 2026-11-05, después de esta evaluación

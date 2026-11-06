@@ -22,7 +22,7 @@ Define en Prisma las entidades de la ola 1 y crea su migración inicial, con res
 
 - `Norma`: identificador, fecha y texto.
 - `Propuesta`: norma, parámetro, valor, vigencia, cita, origen (`manual` o `llm`), estado (`PENDIENTE`, `APROBADA` o `RECHAZADA`), actor, fecha de decisión y motivo de rechazo.
-- `VersionMotor`: parámetro, valor, vigencia, fuente, cita opcional, estado, aprobador y fecha de aprobación opcionales, y propuesta de origen opcional.
+- `VersionMotor`: parámetro, valor, vigencia, fuente, cita obligatoria, estado, aprobador y fecha de aprobación opcionales, y propuesta de origen opcional.
 - `CasoRegresion`: código único, empleado, período y valor esperado.
 - `CorridaRegresion`: propuesta, totales, verdes, rojos, resultados en JSON y fecha.
 - `Empresa`, `Empleado` (sueldo y `optoMensualizacion`) y `Periodo` (empresa, año, mes y estado `ABIERTO` o `CERRADO`).
@@ -52,7 +52,8 @@ Define en Prisma las entidades de la ola 1 y crea su migración inicial, con res
 - [ ] Una segunda `LineaNomina` para el mismo empleado y período falla.
 - [ ] Una segunda `VersionMotor` con el mismo parámetro y vigencia falla.
 - [ ] Un segundo `Aviso` para la misma empresa y versión falla.
-- [ ] Una `VersionMotor` sin cita ni aprobador se guarda, porque la versión 2025 lo necesita.
+- [ ] Una `VersionMotor` sin aprobador se guarda, porque la versión 2025 lo necesita.
+- [ ] Crear una `VersionMotor` sin cita falla.
 - [ ] Un valor de `482.00` se lee como `482.00`, y una vigencia `2026-01-01` se lee igual con `TZ=America/Guayaquil`.
 
 ## Test Plan
