@@ -78,3 +78,11 @@ Implementa `POST /api/normas` y `POST /api/normas/:id/propuesta`, para ingresar 
 - La comparación de la cita solo normaliza los espacios en blanco, decidido el 2026-11-05: el LLM (ola 2) y quien copia a mano pueden alterar saltos de línea sin cambiar el contenido. Mayúsculas, tildes, comillas y puntuación se comparan tal cual. `normalizarEspacios` se exporta desde `src/lib/propuestas.ts` para que la ola 2 la reutilice.
 - La spec no define los códigos 400, 404 y 422. Son una decisión de esta tarea. El 409 de la spec corresponde a T11.
 - T16 modificará estas rutas para emitir eventos.
+- Decisiones de implementación (2026-11-08), no fijadas por el plan:
+  - En `POST /api/normas`, una `fecha` que no es una fecha real `AAAA-MM-DD` responde 400, igual que un campo ausente (el plan solo define 400 para «sin campo»). En la propuesta, valor y fecha inválidos siguen siendo 422.
+  - Un cuerpo JSON válido que no es un objeto (`null`, un arreglo, un número) responde 400 en ambas rutas.
+  - Orden de la propuesta: JSON mal formado (400), norma inexistente (404) y luego validación (422). Dentro de la validación: parámetro, valor, fecha y cita.
+  - `valor` admite número o cadena numérica (`"482.00"`, como `PROPUESTA_DEMO_2026`). La respuesta 201 devuelve `valor` como cadena con 2 decimales (`"482.00"`) y `vigenteDesde` como `AAAA-MM-DD`.
+  - `ErrorHttp`, `leerJson` y `respuestaDeError` viven también en `src/lib/propuestas.ts`.
+  - `normas.test.ts` ejecuta el seed antes de cada prueba para que `VersionMotor`, `Periodo` y `LineaNomina` tengan filas, y compara su contenido completo (no solo los conteos) antes y después.
+  - La prueba manual con `curl` y `npm run dev` no se ejecutó; queda pendiente.
