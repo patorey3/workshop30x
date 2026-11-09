@@ -64,3 +64,7 @@ Crea las pantallas donde el experto revisa propuestas, ejecuta la regresión y d
 ## Notes
 
 S8 aprobado: 4 casos.
+
+- Prueba Playwright E2E verificada: A, B, C, D, E pasan.
+- Bug corregido: botones Ejecutar regresión y Aprobar se deshabilitan mientras el panel de rechazo está abierto.
+- Error de consola en /bandeja: era un 404 de `/favicon.ico` (no existe el archivo), no un hydration warning ni un error de fetch o Prisma. No afecta a la funcionalidad; no se corrigió porque queda fuera del alcance de T12.
