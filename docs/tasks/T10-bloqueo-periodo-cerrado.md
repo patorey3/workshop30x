@@ -70,3 +70,5 @@ Implementa BR-05: una versión nueva solo actualiza las líneas de períodos abi
 - La protección está en la aplicación, no en la base de datos, y esto es suficiente para un demo con datos ficticios. El último criterio evita que otra parte del código la esquive.
 - Las pruebas crean directamente la versión 2026, porque su publicación real se implementa en T11.
 - El resumen alimenta el evento de aprobación de T16, que espera 2 períodos cerrados sin tocar.
+- El criterio 8 se cumple tras ajustar `src/lib/seed.test.ts` para no usar `lineaNomina.update` (usa SQL crudo con `$executeRaw`).
+- `calcularMensualizado` recibe `{ sbu, optoMensualizacion }` (T05), no argumentos posicionales.
