@@ -75,3 +75,10 @@ Implementa `POST /api/propuestas/:id/regresion`, que simula la propuesta sobre t
 - **La simulación debe recalcular también los períodos cerrados.** Si leyera el valor guardado, RC-01 siempre saldría en verde y no detectaría la vigencia anticipada de 2025-12-01. Esto no contradice BR-05, porque no se escribe nada.
 - El redondeo depende de T05 y de S14. Los valores de los casos no cambian con esa convención, porque ninguno cae en un empate.
 - T16 modificará esta ruta para emitir eventos.
+- **Implementación (decisiones):**
+  - La ruta admite varias corridas por propuesta mientras esté `PENDIENTE`: una corrida es evidencia, no una decisión. Cada llamada inserta una `CorridaRegresion` nueva; T11 debe evaluar BR-02 sobre la corrida más reciente.
+  - 409 tanto para `APROBADA` como para `RECHAZADA`. Se amplió `ErrorHttp` (`src/lib/propuestas.ts`) para admitir 409.
+  - «Antes» usa las versiones publicadas (`INICIAL` o `APROBADA`) del parámetro de la propuesta; «después», esas mismas más la candidata, que reemplaza a la publicada con la misma vigencia.
+  - Si el cálculo de «antes» o «después» falla (p. ej. un período anterior a todas las versiones), el caso queda en rojo, con `antes`/`despues` en `null` y el mensaje en `error`. Es más estricto que «verde si después = esperado»: un caso sin «antes» calculable no se da por bueno.
+  - Los importes del resultado (`esperado`, `antes`, `despues`) se guardan como texto con 2 decimales y se comparan como texto, no como flotantes. `null` en `antes`/`despues` también indica un empleado que no optó por la mensualización.
+  - `CorridaRegresion` ya estaba en `TABLAS` de `src/test/limpiar.ts` (el `TRUNCATE … CASCADE` no depende del orden), así que no se modificó.
