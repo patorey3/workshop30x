@@ -79,3 +79,15 @@ Implementa `POST /api/propuestas/:id/aprobar` y `POST /api/propuestas/:id/rechaz
 - La spec pide que publicación, avisos y eventos ocurran en una sola transacción. Los eventos se agregan a esta misma transacción en T16.
 - Ambas empresas ficticias cuentan como afectadas. La spec no define otro criterio, y el recorrido exige 2 avisos.
 - Una transacción interactiva de Prisma tiene un tiempo límite por defecto de 5 segundos. Compruébalo contra Supabase, con su latencia real, y ajusta `timeout` si hace falta.
+
+### Notas de implementación
+
+- Ambas rutas usan `prisma.$transaction(..., { timeout: 15_000 })`. Contra Supabase, la prueba más larga (sembrar, crear la propuesta, regresión y aprobar $482) tarda unos 15 s en total y pasa; la duración de la transacción sola no se midió.
+- `aprobarPropuesta` vuelve a buscar la propuesta (con su norma) dentro de la transacción, porque necesita sus datos; la ruta hace además una consulta previa fuera de la transacción para responder 404 sin abrirla.
+- La decisión (`updateMany` condicionado a `PENDIENTE`) va antes de comprobar la corrida: si BR-02 falla, el `throw` revierte la decisión y la propuesta sigue `PENDIENTE`.
+- `aprobadaEn` de la versión y `decididaEn` de la propuesta comparten la misma marca de tiempo.
+- Las versiones para `aplicarVersionAPeriodosAbiertos` se leen con `tx.versionMotor.findMany` dentro de la transacción (incluye la nueva). No se usa `obtenerVersionesPublicadas` (T06) porque su tipo solo admite `PrismaClient`, no el cliente de la transacción.
+- Mensaje del aviso: `Nuevo SBU 482.00 desde 2026-01-01 afecta el período abierto` (valor con 2 decimales). La spec no fija este texto.
+- `rechazar` sobre una propuesta inexistente responde 404 (no estaba en el plan; evita devolver 409 «ya decidida» para algo que no existe).
+- Prueba de rollback: espiar `prisma.aviso.create` no sirve, porque dentro de `$transaction` el cliente `tx` es otro objeto. La prueba envuelve `tx` en un `Proxy` cuyo `aviso.create` falla en la primera llamada y llama a `aprobarPropuesta` directamente.
+- Pruebas añadidas fuera del plan: una corrida posterior con rojos invalida una verde anterior (se usa la más reciente), y aprobar una segunda propuesta con la misma vigencia responde 409.
