@@ -12,3 +12,25 @@ CLAUDE.md
 
 # Prompts personales
 promt*.md
+
+# MCP local (ruta absoluta, específica de la máquina)
+.mcp.json
+
+# Playwright (artefactos de test)
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.playwright/
+
+# Capturas de pruebas manuales
+/*.png
+
+# Playwright MCP (cache local)
+.playwright-mcp/
+
+# Capturas de pruebas manuales
+/*.png
+
+# Playwright MCP (cache local)
+.playwright-mcp/
