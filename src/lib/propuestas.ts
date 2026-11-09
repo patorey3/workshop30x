@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 // Error con el código HTTP que debe devolver la ruta.
 export class ErrorHttp extends Error {
   constructor(
-    public readonly status: 400 | 404 | 422,
+    public readonly status: 400 | 404 | 409 | 422,
     message: string,
   ) {
     super(message);
